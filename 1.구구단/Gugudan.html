@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <p>{{ a }}과(와) {{ b }}를 곱한 값은?</p>
+        <form v-on:submit="multiplication">
+            <label>입력창</label>
+            <input type="number" ref="answer" v-model="value">
+            <button>계산</button>
+        </form>
+        <p>연속정답 : {{ count }}</p>
+        <p>{{ result }}</p>
+    </div>
+</body>
+<script>
+    var app = new Vue({
+        el: "#root",
+        data: {
+            a:Math.floor(Math.random()*9)+1,
+            b:Math.floor(Math.random()*9)+1,
+            value:'',
+            result:'',
+            count:0,
+        },
+        methods: {
+            multiplication(e){
+                // console.log(this.a, this.b, this.a*this.b);
+                e.preventDefault();
+                if(this.a*this.b === parseInt(this.value)){
+                    this.result = '정답입니다.';
+                    this.value = '';
+                    this.a = Math.floor(Math.random()*9)+1;
+                    this.b = Math.floor(Math.random()*9)+1;
+                    this.$refs.answer.focus();
+                    this.count = this.count+1;
+                } else {
+                    this.result = '틀렸습니다.';
+                    this.value = '';
+                    this.$refs.answer.focus();
+                    this.count = 0;
+                }
+            }
+        }
+    });
+</script>
+</html>
